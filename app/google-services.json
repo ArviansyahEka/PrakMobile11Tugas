@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1010081297695",
+    "project_id": "prakmobile11tugas-67fea",
+    "storage_bucket": "prakmobile11tugas-67fea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010081297695:android:d9aab6a411d6106a2dec2a",
+        "android_client_info": {
+          "package_name": "com.example.prakmobile11tugas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2qXHt5AjYF9ebIJf_FkAe40dHxOUf0A0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
