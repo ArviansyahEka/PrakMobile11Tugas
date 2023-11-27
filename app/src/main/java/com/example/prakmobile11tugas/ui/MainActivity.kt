@@ -3,6 +3,7 @@ package com.example.prakmobile11tugas.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             val deskripsi = edtDeskripsi.text.toString()
             val tanggal = edtTanggal.text.toString()
 
-            val pengaduan = Pengaduan(judul, deskripsi, tanggal)
+            val pengaduan = Pengaduan(judul = judul, deskripsi = deskripsi, tanggal = tanggal)
 
             tambahPengaduan(pengaduan)
 
@@ -44,13 +45,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun tambahPengaduan(pengaduan: Pengaduan) {
-        pengaduanCollectionRef.add(pengaduan)
+        // Use judul as the document ID
+        pengaduanCollectionRef.add(pengaduan).addOnSuccessListener { documentReference ->
+            val createdPengaduanId = documentReference.id
+            // Create a new Pengaduan object with the updated id
+            val updatedPengaduan = Pengaduan(
+                id = createdPengaduanId,
+                judul = pengaduan.judul,
+                deskripsi = pengaduan.deskripsi,
+                tanggal = pengaduan.tanggal
+            )
+
+            documentReference.set(updatedPengaduan)
+                .addOnSuccessListener {
+                    Log.d("MainActivity", "Pengaduan successfully added!")
+                    navigateToListActivity()
+                }
+                .addOnFailureListener { e ->
+                    Log.e("MainActivity", "Error adding pengaduan", e)
+                }
+        }
     }
 
-    companion object {
-        fun createIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java)
-        }
+
+    private fun navigateToListActivity() {
+        val intent = Intent(this, ListActivity::class.java)
+            startActivity(intent)
+        finish()
     }
 }
 

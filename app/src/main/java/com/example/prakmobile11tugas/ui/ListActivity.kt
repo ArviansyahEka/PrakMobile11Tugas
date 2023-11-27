@@ -1,5 +1,5 @@
 package com.example.prakmobile11tugas.ui
-// ListActivity.kt
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -40,7 +40,18 @@ class ListActivity : AppCompatActivity() {
 
         tambahButton.setOnClickListener {
             // Buka MainActivity untuk menambahkan data
-            startActivity(MainActivity.createIntent(this))
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val selectedPengaduan = pengaduanList[position]
+            // Handle the selected note, you can navigate to UpdateDeleteActivity with the selected note's ID
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("pengaduan_judul", selectedPengaduan.judul)
+            intent.putExtra("pengaduan_deskripsi", selectedPengaduan.deskripsi)
+            intent.putExtra("pengaduan_tanggal", selectedPengaduan.tanggal)
+            intent.putExtra("pengaduan_id", selectedPengaduan.id)
+            startActivity(intent)
         }
     }
 
@@ -61,10 +72,9 @@ class ListActivity : AppCompatActivity() {
     }
 
     companion object {
+        @JvmStatic
         fun createIntent(context: Context): Intent {
             return Intent(context, ListActivity::class.java)
         }
     }
 }
-
-
